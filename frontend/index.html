@@ -3,46 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike Failure Prediction</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>EV IntelliCare - AI Early Warning System</title>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bike Failure Prediction</h1>
-        <form action="/predict" method="POST">
-            <label>Battery Health (%)</label>
-            <input type="number" name="battery_health" required>
-
-            <label>Motor Temperature (°C)</label>
-            <input type="number" name="motor_temp" required>
-
-            <label>Brake Wear (%)</label>
-            <input type="number" name="brake_wear" required>
-
-            <label>Suspension Stress (%)</label>
-            <input type="number" name="suspension_stress" required>
-
-            <label>Driver Score</label>
-            <input type="number" name="driver_score" required>
-
-            <label>Road Type (0: Smooth, 1: Rough, 2: Potholes)</label>
-            <input type="number" name="road_type" required>
-
-            <button type="submit">Predict</button>
-        </form>
-
-        {% if failure_risk is not none %}
-        <div class="result">
-            <h3>Prediction Result</h3>
-            <p><strong>Failure Risk:</strong> {{ "Yes" if failure_risk == 1 else "No" }}</p>
-            <p><strong>Failed Component:</strong> {{ failed_component }}</p>
-            <p><strong>Suggested Solution:</strong> {{ solution }}</p>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">EV IntelliCare</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#predict">Predict</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        </nav>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="tracking-in-expand">AI-Driven Early Warning</h1>
+            <p>Predict failures before they happen and ensure your EV’s reliability with AI-powered analytics.</p>
+            <a href="/health-status" class="cta-button">Driver Analysis</a>
+            <a href="/failure-prediction" class="cta-button">Bike Feature</a>
         </div>
-        {% endif %}
+    </section>
 
-        {% if error %}
-        <p style="color: red;">Error: {{ error }}</p>
-        {% endif %}
-    </div>
+    <section id="features" class="features">
+        <h2>Key Features</h2>
+        <div class="feature-container">
+            <div class="feature-card">
+                <h3>Real-time Monitoring</h3>
+                <p>Track battery health, motor performance, and overall EV condition.</p>
+            </div>
+            <div class="feature-card">
+                <h3>AI Failure Prediction</h3>
+                <p>Detect potential issues before they occur and avoid breakdowns.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Predictive Maintenance</h3>
+                <p>Get smart alerts and maintenance suggestions based on AI analysis.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Road Condition Adaptation</h3>
+                <p>Analyze road types and adjust EV settings for optimal performance.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="predict" class="predict">
+        <h2>AI Predictive Analysis</h2>
+        <div class="predict-container">
+            <div class="predict-card">
+                <h3>Prediction Results</h3>
+                <p>Battery Health: <strong>85%</strong> (Trending Down)</p>
+                <p>Motor Efficiency: <strong>92%</strong> (Stable)</p>
+                <p>AI Confidence Score: <strong>80%</strong></p>
+                <div class="chart-placeholder">[Graph Placeholder]</div>
+            </div>
+            <div class="predict-card">
+                <h3>Maintenance Checklist</h3>
+                <ul>
+                    <li>✔ Check battery coolant levels</li>
+                    <li>✔ Inspect brake pads</li>
+                    <li>✔ Optimize motor calibration</li>
+                </ul>
+            </div>
+            <div class="predict-card">
+                <h3>Past Reports</h3>
+                <p><strong>Last Month:</strong> Battery: 90%, Motor: 93%</p>
+                <p><strong>2 Months Ago:</strong> Battery: 92%, Motor: 94%</p>
+                <a href="#" class="cta-button">View Detailed Report</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About EV IntelliCare</h2>
+        <p>EV IntelliCare is an AI-powered system designed to enhance the reliability and safety of electric vehicles. Our advanced analytics provide real-time monitoring, predictive maintenance, and early failure detection, ensuring a seamless driving experience.</p>
+        <p>Our mission is to revolutionize EV maintenance with intelligent, data-driven solutions that prevent breakdowns and optimize performance.</p>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact Us</h2>
+      <p>Have questions or need support? Get in touch with us.</p>
+  
+      <div class="contact-container">
+          <div class="contact-info">
+              <p><strong>Email:</strong> support@evintellicare.com</p>
+              <p><strong>Phone:</strong> +91 1234-567-890</p>
+              <p><strong>Address:</strong> 123 EV Street, Smart City, AI 56789</p>
+          </div>
+  
+          <!-- <form id="contact-form">
+              <input type="text" id="name" placeholder="Your Name" required>
+              <input type="email" id="email" placeholder="Your Email" required>
+              <textarea id="message" rows="4" placeholder="Your Message" required></textarea>
+              <button type="submit">Send Message</button>
+          </form> -->
+      </div>
+  
+      <div id="contact-result"></div>
+  </section>
+  
+  <!-- <script>
+      document.getElementById("contact-form").addEventListener("submit", function(event) {
+          event.preventDefault();
+          document.getElementById("contact-result").innerText = "Thank you! Your message has been sent.";
+          document.getElementById("contact-form").reset();
+      });
+  </script> -->
+  
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("nav-links").classList.toggle("active");
+        }
+    </script>
 </body>
 </html>

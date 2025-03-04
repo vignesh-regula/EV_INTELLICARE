@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Health Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='users.css') }}">
+</head>
+<body>
+
+<section id="predict-form">
+    <h2>EV Health Prediction</h2>
+    <p>Enter your EV details below for an AI-powered health analysis.</p>
+
+    <form action="{{ url_for('predict_health') }}" method="post">
+        <label for="battery-life">Battery Life (%):</label>
+        <input type="number" id="battery-life" name="battery_life" required>
+
+        <label for="wiring-condition">Wiring Condition (0-100):</label>
+        <input type="number" id="wiring-condition" name="wiring_condition" required>
+
+        <label for="engine-system-health">Engine System Health (0-100):</label>
+        <input type="number" id="engine-system-health" name="engine_system_health" required>
+
+        <button type="submit">Predict Health</button>
+    </form>
+
+    {% if health_status %}
+    <div id="prediction-output">
+        <h3>Health Prediction</h3>
+        <p><strong>Predicted Status:</strong> {{ health_status }}</p>
+        <p><strong>Comparison with Last Record:</strong> {{ comparison }}</p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">
+        <p style="color: red;">{{ error }}</p>
+    </div>
+    {% endif %}
+</section>
+
+</body>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+#predict-form {
+    background: white;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 15px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#error {
+    color: red;
+}
+
+#prediction-output {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+</style>
+</html>
