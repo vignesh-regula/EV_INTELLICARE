@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Failure Prediction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bike Failure Prediction</h1>
+        <form action="/predict" method="POST">
+            <label>Battery Health (%)</label>
+            <input type="number" name="battery_health" required>
+
+            <label>Motor Temperature (°C)</label>
+            <input type="number" name="motor_temp" required>
+
+            <label>Brake Wear (%)</label>
+            <input type="number" name="brake_wear" required>
+
+            <label>Suspension Stress (%)</label>
+            <input type="number" name="suspension_stress" required>
+
+            <label>Driver Score</label>
+            <input type="number" name="driver_score" required>
+
+            <label>Road Type (0: Smooth, 1: Rough, 2: Potholes)</label>
+            <input type="number" name="road_type" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if failure_risk is not none %}
+        <div class="result">
+            <h3>Prediction Result</h3>
+            <p><strong>Failure Risk:</strong> {{ "Yes" if failure_risk == 1 else "No" }}</p>
+            <p><strong>Failed Component:</strong> {{ failed_component }}</p>
+            <p><strong>Suggested Solution:</strong> {{ solution }}</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
